@@ -9,7 +9,6 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
     if (playerSelection === computerSelection) {
         return `It's a tie! ${playerSelection} ties with ${computerSelection}`;
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
@@ -29,7 +28,13 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
     for( let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Rock, paper, scissors! - make your choice:", "");
+        let playerSelection = prompt("Rock, paper, scissors! - make your choice:", "Rock");
+        playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
+        while (!choices.includes(playerSelection)) {
+            playerSelection = prompt("You can choose only rock, paper, scissors!", "Rock");
+            playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
+        }
+
         const computerSelection = getComputerChoice();
         console.log(playRound(playerSelection, computerSelection));
     }
@@ -41,7 +46,7 @@ function getWinner(pWin, cWin) {
     const winText = `\tYou're the winner! You won ${pWin} : ${cWin}`;
     const loseText = `\tYou lost ${pWin} : ${cWin}`;
     const tieText = `\tThe game ended with a tie! ${pWin} : ${cWin}`;
-    
+
     if (pWin > cWin) return winText;
     else if (pWin == cWin) return tieText;
     else return loseText;
