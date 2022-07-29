@@ -1,4 +1,6 @@
 const choices = ["Rock", "Paper", "Scissors"];
+let pWinCount = 0;
+let cWinCount = 0;
 
 function getComputerChoice() {
     let randomNum = Math.floor(Math.random()*choices.length);
@@ -11,16 +13,38 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         return `It's a tie! ${playerSelection} ties with ${computerSelection}`;
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
+        pWinCount++;
         return "You win! Rock beats Scissors";
     } else if (playerSelection === "Paper" && computerSelection === "Rock") {
+        pWinCount++;
         return "You win! Paper beats Rock";
     } else if (playerSelection === "Scissors" && computerSelection === "Paper") {
+        pWinCount++;
         return "You win! Scissors beats Paper";
     } else {
-        return `You lose! ${computerSelection} beats ${playerSelection}`;
+        cWinCount++;
+        return `You lose! ${computerSelection} beats ${playerSelection}`;    
     }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+    for( let i = 0; i < 5; i++) {
+        const playerSelection = prompt("Rock, paper, scissors! - make your choice:", "");
+        const computerSelection = getComputerChoice();
+        console.log(playRound(playerSelection, computerSelection));
+    }
+
+    console.log(getWinner(pWinCount, cWinCount));
+}
+
+function getWinner(pWin, cWin) {
+    const winText = `\tYou're the winner! You won ${pWin} : ${cWin}`;
+    const loseText = `\tYou lost ${pWin} : ${cWin}`;
+    const tieText = `\tThe game ended with a tie! ${pWin} : ${cWin}`;
+    
+    if (pWin > cWin) return winText;
+    else if (pWin == cWin) return tieText;
+    else return loseText;
+}
+
+game();
