@@ -2,6 +2,19 @@ const choices = ["Rock", "Paper", "Scissors"];
 let pWinCount = 0;
 let cWinCount = 0;
 
+const buttons = document.querySelectorAll("button");
+buttons.forEach((btn) => {
+    btn.addEventListener("click", getPlayerChoice);
+})
+const resultDiv = document.querySelector("#roundResult");
+
+function getPlayerChoice() {
+    const playerSelection = this.textContent.trim();
+    const computerSelection = getComputerChoice();
+
+    resultDiv.textContent = playRound(playerSelection, computerSelection);
+}
+
 function getComputerChoice() {
     let randomNum = Math.floor(Math.random()*choices.length);
     const choice = choices[randomNum];
@@ -26,22 +39,6 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    for( let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Rock, paper, scissors! - make your choice:", "Rock");
-        playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
-        while (!choices.includes(playerSelection)) {
-            playerSelection = prompt("You can choose only rock, paper, scissors!", "Rock");
-            playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
-        }
-
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-    }
-
-    console.log(getWinner(pWinCount, cWinCount));
-}
-
 function getWinner(pWin, cWin) {
     const winText = `\tYou're the winner! You won ${pWin} : ${cWin}`;
     const loseText = `\tYou lost ${pWin} : ${cWin}`;
@@ -51,5 +48,3 @@ function getWinner(pWin, cWin) {
     else if (pWin == cWin) return tieText;
     else return loseText;
 }
-
-game();
