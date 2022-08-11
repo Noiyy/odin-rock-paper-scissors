@@ -5,21 +5,28 @@ let cWinCount = 0;
 const buttons = document.querySelectorAll("button");
 buttons.forEach((btn) => {
     btn.addEventListener("click", getPlayerChoice);
-})
+    btn.addEventListener("transitionend", removeRotation);
+});
 const roundResult = document.querySelector(".roundResult");
 const gameResultDiv = document.querySelector("#gameResult");
-const pScorePara = document.querySelector(".pScore");
-const cScorepara = document.querySelector(".cScore");
-const container = document.querySelector(".container");
+const pScore = document.querySelector(".pScore span");
+const cScore = document.querySelector(".cScore span");
+const resultContainer = document.querySelector("#main .row.results");
+
+function removeRotation(e) {
+    if (e.propertyName !== "transform") return;
+    this.classList.remove("chosen");
+}
 
 function getPlayerChoice() {
     if (gameResultDiv.textContent) return;
-    const playerSelection = this.textContent.trim();
+    const playerSelection = this.dataset.choice;
     const computerSelection = getComputerChoice();
 
     roundResult.textContent = playRound(playerSelection, computerSelection);
-    pScorePara.textContent = "You: " + pWinCount;
-    cScorepara.textContent = "Computer: " + cWinCount;
+    pScore.textContent = pWinCount;
+    cScore.textContent = cWinCount;
+    this.classList.add("chosen");
     checkForWinner();
 }
 
@@ -32,18 +39,19 @@ function checkForWinner() {
         playAgainBtn.textContent = "Play again?";
         playAgainBtn.addEventListener("click", resetGame);
 
-        container.appendChild(playAgainBtn);
+        resultContainer.appendChild(playAgainBtn);
     }
 }
 
 function resetGame() {
     pWinCount = 0;
     cWinCount = 0;
-    pScorePara.textContent = "You: " + pWinCount;
-    cScorepara.textContent = "Computer: " + cWinCount;
+    pScore.textContent = pWinCount;
+    cScore.textContent = cWinCount;
     gameResultDiv.textContent = "";
     roundResult.textContent = "Click on a button to make a choice!";
-    container.removeChild(document.querySelector(".playAgainBtn"));
+    resultContainer.removeChild(document.querySelector(".playAgainBtn"));
+    document.body.style.background = "rgb(53, 53, 53)";
 }
 
 function getComputerChoice() {
@@ -54,26 +62,31 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
+        document.body.style.backgroundImage = "url(assets/images/tie.jpg)";
         return `It's a tie! ${playerSelection} ties with ${computerSelection}`;
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
         pWinCount++;
+        document.body.style.backgroundImage = "url(assets/images/won.jpg)";
         return "You win! Rock beats Scissors";
     } else if (playerSelection === "Paper" && computerSelection === "Rock") {
         pWinCount++;
+        document.body.style.backgroundImage = "url(assets/images/won.jpg)";
         return "You win! Paper beats Rock";
     } else if (playerSelection === "Scissors" && computerSelection === "Paper") {
         pWinCount++;
+        document.body.style.backgroundImage = "url(assets/images/won.jpg)";
         return "You win! Scissors beats Paper";
     } else {
         cWinCount++;
+        document.body.style.backgroundImage = "url(assets/images/lost.jpg)";
         return `You lose! ${computerSelection} beats ${playerSelection}`;    
     }
 }
 
 function getWinner(pWin, cWin) {
-    const winText = `You're the winner! You won the game ${pWin} : ${cWin}`;
-    const loseText = `You lost the game ${pWin} : ${cWin}`;
-    const tieText = `The game ended with a tie! ${pWin} : ${cWin}`;
+    const winText = `You're the winner! You won the game!`;
+    const loseText = `You lost the game!`;
+    const tieText = `The game ended with a tie!`;
 
     if (pWin > cWin) return winText;
     else if (pWin == cWin) return tieText;

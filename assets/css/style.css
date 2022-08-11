@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+@font-face {
+    font-family: 'tiki_tropicregular';
+    src: url('fonts/tiki_tropic-webfont.woff2') format('woff2'),
+         url('fonts/tiki_tropic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(53, 53, 53);
+    background-size: cover;
+    background-blend-mode: soft-light;
+    background-repeat: no-repeat;
+    color: white;
+    font-family: 'Merriweather', serif;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+header {
+    font-family: 'tiki_tropicregular';
+    background-color: white;
+    color: #e3006c;
+    text-transform: uppercase;
+    font-size: 32px;
+    padding: 16px;
+}
+
+span.pink {
+    color: #e3006c;
+}
+
+span.brown {
+    color: #601608;
+}
+
+span.orange {
+    color: #f98533;
+}
+
+#main {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#main button {
+    padding: 8px;
+    border: 4px solid white;
+    border-radius: 8px;
+    background-color: transparent;
+    font-size: 32px;
+    background-color: white;
+    flex: 1;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .07s ease;
+}
+
+#main button.chosen {
+    transform: rotate(90deg);
+}
+
+#main .row.choices button:hover {
+    background-color: gainsboro;
+}
+
+#main button p {
+    margin: 0;
+    padding: 8px;
+    font-size: 88px;
+}
+
+#main .row.choices {
+    justify-content: space-between;
+    gap: 32px;
+}
+
+#main .row.results {
+    flex-flow: column wrap;
+}
+
+#main #score {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    font-size: 28px;
+    margin-top: 32px;
+}
+
+#main #score h4{
+    margin: 0;
+}
+
+#main #score span {
+    font-size: 40px;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 20px;
+    padding: 8px;
+    margin: 8px 0 16px;
+}
+
+#main .pScore, #main .cScore {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main .container {
+    min-width: 700px;
+}
+
+#main .roundResult {
+    font-size: 20px;
+}
+
+#main #gameResult {
+    font-size: 32px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px;
+    color: #f98533;
+}
+
+#main .playAgainBtn {
+    padding: 8px;
+    border: 0;
+    font-size: 24px;
+    color: darkgray;
+    background-color: transparent;
+    flex: 1;
+    transition: 0.2s;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+#main .playAgainBtn:hover {
+    text-decoration: underline;
+    color: white;  
+}
+
+footer {
+    padding: 16px;
+    background-color: white;
+    color: rgb(53, 53, 53);
+}
+
+footer a {
+    text-decoration: underline;
+    text-decoration-color: #f98533;
+    color: rgb(53, 53, 53);
+    transition: 0.2s;
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: #f98533;
+}
