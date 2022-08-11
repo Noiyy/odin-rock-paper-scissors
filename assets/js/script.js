@@ -6,13 +6,44 @@ const buttons = document.querySelectorAll("button");
 buttons.forEach((btn) => {
     btn.addEventListener("click", getPlayerChoice);
 })
-const resultDiv = document.querySelector("#roundResult");
+const roundResult = document.querySelector(".roundResult");
+const gameResultDiv = document.querySelector("#gameResult");
+const pScorePara = document.querySelector(".pScore");
+const cScorepara = document.querySelector(".cScore");
+const container = document.querySelector(".container");
 
 function getPlayerChoice() {
+    if (gameResultDiv.textContent) return;
     const playerSelection = this.textContent.trim();
     const computerSelection = getComputerChoice();
 
-    resultDiv.textContent = playRound(playerSelection, computerSelection);
+    roundResult.textContent = playRound(playerSelection, computerSelection);
+    pScorePara.textContent = "You: " + pWinCount;
+    cScorepara.textContent = "Computer: " + cWinCount;
+    checkForWinner();
+}
+
+function checkForWinner() {
+    if (pWinCount == 5 || cWinCount == 5) {
+        gameResultDiv.textContent = getWinner(pWinCount, cWinCount);
+
+        const playAgainBtn = document.createElement("button");
+        playAgainBtn.classList.add("playAgainBtn")
+        playAgainBtn.textContent = "Play again?";
+        playAgainBtn.addEventListener("click", resetGame);
+
+        container.appendChild(playAgainBtn);
+    }
+}
+
+function resetGame() {
+    pWinCount = 0;
+    cWinCount = 0;
+    pScorePara.textContent = "You: " + pWinCount;
+    cScorepara.textContent = "Computer: " + cWinCount;
+    gameResultDiv.textContent = "";
+    roundResult.textContent = "Click on a button to make a choice!";
+    container.removeChild(document.querySelector(".playAgainBtn"));
 }
 
 function getComputerChoice() {
@@ -40,9 +71,9 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function getWinner(pWin, cWin) {
-    const winText = `\tYou're the winner! You won ${pWin} : ${cWin}`;
-    const loseText = `\tYou lost ${pWin} : ${cWin}`;
-    const tieText = `\tThe game ended with a tie! ${pWin} : ${cWin}`;
+    const winText = `You're the winner! You won the game ${pWin} : ${cWin}`;
+    const loseText = `You lost the game ${pWin} : ${cWin}`;
+    const tieText = `The game ended with a tie! ${pWin} : ${cWin}`;
 
     if (pWin > cWin) return winText;
     else if (pWin == cWin) return tieText;
