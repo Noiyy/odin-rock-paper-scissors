@@ -3,19 +3,26 @@ let pWinCount = 0;
 let cWinCount = 0;
 
 const buttons = document.querySelectorAll("button");
-buttons.forEach((btn) => {
-    btn.addEventListener("click", getPlayerChoice);
-    btn.addEventListener("transitionend", removeRotation);
-});
 const roundResult = document.querySelector(".roundResult");
 const gameResultDiv = document.querySelector("#gameResult");
 const pScore = document.querySelector(".pScore span");
 const cScore = document.querySelector(".cScore span");
 const resultContainer = document.querySelector("#main .row.results");
 
+buttons.forEach((btn) => {
+    btn.addEventListener("click", getPlayerChoice);
+    btn.addEventListener("transitionend", removeRotation);
+});
+roundResult.addEventListener("transitionend", removeScale);
+
 function removeRotation(e) {
     if (e.propertyName !== "transform") return;
     this.classList.remove("chosen");
+}
+
+function removeScale(e) {
+    if (e.propertyName !== "transform") return;
+    this.classList.remove("announced");
 }
 
 function getPlayerChoice() {
@@ -27,6 +34,7 @@ function getPlayerChoice() {
     pScore.textContent = pWinCount;
     cScore.textContent = cWinCount;
     this.classList.add("chosen");
+    roundResult.classList.add("announced");
     checkForWinner();
 }
 
@@ -50,8 +58,13 @@ function resetGame() {
     cScore.textContent = cWinCount;
     gameResultDiv.textContent = "";
     roundResult.textContent = "Click on a button to make a choice!";
+
     resultContainer.removeChild(document.querySelector(".playAgainBtn"));
     document.body.style.background = "rgb(53, 53, 53)";
+    buttons.forEach((btn) => {
+        if (btn.classList.contains("chosen")) btn.classList.remove("chosen");
+    })
+    if (roundResult.classList.contains("announced")) roundResult.classList.remove("announced");
 }
 
 function getComputerChoice() {
@@ -62,23 +75,23 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
-        document.body.style.backgroundImage = "url(assets/images/tie.jpg)";
+        changeBg("tie");
         return `It's a tie! ${playerSelection} ties with ${computerSelection}`;
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
         pWinCount++;
-        document.body.style.backgroundImage = "url(assets/images/won.jpg)";
+        changeBg("won");
         return "You win! Rock beats Scissors";
     } else if (playerSelection === "Paper" && computerSelection === "Rock") {
         pWinCount++;
-        document.body.style.backgroundImage = "url(assets/images/won.jpg)";
+        changeBg("won");
         return "You win! Paper beats Rock";
     } else if (playerSelection === "Scissors" && computerSelection === "Paper") {
         pWinCount++;
-        document.body.style.backgroundImage = "url(assets/images/won.jpg)";
+        changeBg("won");
         return "You win! Scissors beats Paper";
     } else {
         cWinCount++;
-        document.body.style.backgroundImage = "url(assets/images/lost.jpg)";
+        changeBg("lost");
         return `You lose! ${computerSelection} beats ${playerSelection}`;    
     }
 }
@@ -91,4 +104,26 @@ function getWinner(pWin, cWin) {
     if (pWin > cWin) return winText;
     else if (pWin == cWin) return tieText;
     else return loseText;
+}
+
+// Konosuba background konami code easter egg
+let konosuba = false;
+const keyPattern = ["k", "o", "n", "o", "s", "u", "b", "a"];
+let current = 0;
+document.addEventListener('keydown', keyHandler, false);
+
+function keyHandler(e) {
+    if (keyPattern.indexOf(e.key) < 0 || e.key !== keyPattern[current]) {
+        current = 0;
+        return;
+    }
+
+    current++;
+    if (keyPattern.length === current) konosuba = true;
+};
+
+function changeBg(bgType="") {
+    if (konosuba)
+        document.body.style.backgroundImage = `url(assets/images/${bgType}.jpg)`;
+    else return;
 }

@@ -170,6 +170,11 @@ span.orange {
 
 #main .roundResult {
     font-size: 20px;
+    transition: all .25s ease;
+}
+
+#main .roundResult.announced {
+    transform: scale(1.2);
 }
 
 #main #gameResult {
