@@ -10,7 +10,7 @@
 
 @media (max-width: 500px) {
     header h1 {
-        font-size: 1.2em;
+        font-size: 0.8em;
     }
 
     #main button {
@@ -18,18 +18,39 @@
     }
 
     #main button p {
-        font-size: 2em !important;
+        font-size: 1.5em !important;
     }
 
     #main button span {
-        font-size: 0.6em;
+        font-size: 0.45em;
+    }
+
+    #main .roundResult {
+        font-size: 1em !important;
+    }
+
+    #main #score {
+        margin-top: 0 !important;
+    }
+
+    #main #score h4 {
+        font-size: 0.65em;
+    }
+
+    #main #score span {
+        font-size: 1em !important;
+        margin-top: 4px !important;
+    }
+
+    #main #gameResult {
+        font-size: 1.5em !important;
     }
 }
 
 @media (min-width: 501px)
         and (max-width: 640px) {
     header h1 {
-        font-size: 1.45em;
+        font-size: 1.2em;
     }
 
     #main button {
@@ -133,6 +154,7 @@ span.orange {
 
 #main .row.choices {
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 32px;
 }
 
@@ -153,7 +175,7 @@ span.orange {
 }
 
 #main #score span {
-    font-size: 40px;
+    font-size: 1.5em;
     font-weight: bold;
     background-color: white;
     border-radius: 20px;
@@ -178,11 +200,12 @@ span.orange {
 }
 
 #main #gameResult {
-    font-size: 32px;
+    font-size: 2em;
     background-color: white;
     border-radius: 8px;
     padding: 8px;
     color: #f98533;
+    text-align: center;
 }
 
 #main .playAgainBtn {
@@ -206,6 +229,7 @@ footer {
     padding: 16px;
     background-color: white;
     color: rgb(53, 53, 53);
+    text-align: center;
 }
 
 footer a {
